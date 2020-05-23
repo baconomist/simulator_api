@@ -4,20 +4,33 @@
 
 #pragma once
 
-#include "unity_api.h"
+//#include "unity_api.h"
+//
+//using namespace unity_api;
 
-using namespace unity_api;
+#define SIM_ROBOT_API __declspec(dllexport)
 
 extern "C"
 {
-    namespace unity_api
-    {
-    SIM_ROBOT_API SimRobotUnityAPI *GetSharedRobotAPI();
 
-    SIM_ROBOT_API void DeleteSharedRobotAPI(SimRobotUnityAPI *api);
+SIM_ROBOT_API int Test();
 
-    SIM_ROBOT_API int GetMotorVoltage(SimRobotUnityAPI *api, int port);
+//SIM_ROBOT_API SimRobotUnityAPI *GetSharedRobotAPI();
+//
+//SIM_ROBOT_API void DeleteSharedRobotAPI(SimRobotUnityAPI *api);
+//
+//SIM_ROBOT_API int GetMotorVoltage(SimRobotUnityAPI *api, int port);
 
-    SIM_ROBOT_API int Test();
-    }
+SIM_ROBOT_API int GetOutputBufferSize();
+
+SIM_ROBOT_API void ReadOutputBuffer(char* outBuff);
+
+SIM_ROBOT_API void InitializeAutonomous();
+
+SIM_ROBOT_API void InitializeOpControl();
+
+SIM_ROBOT_API void UpdateAutonomous();
+
+SIM_ROBOT_API void UpdateOpControl();
+
 }

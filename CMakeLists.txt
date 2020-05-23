@@ -9,11 +9,11 @@ message("Generator is set to ${CMAKE_GENERATOR}")
 
 set(VERSION "2.8.4") # Create var "VERSION"
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall")
-
 # Disable sh.exe mingw error
 set(DCMAKE_SH="CMAKE_SH-NOTFOUND")
+
+# Export all methods?
+# set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 cmake_minimum_required(VERSION ${VERSION})
 project(SimulatorAPI CXX)
@@ -21,13 +21,17 @@ project(SimulatorAPI CXX)
 file(GLOB SOURCES "src/*.c" "src/*.h" "src/*.cpp" "src/*.hpp")
 
 # Enable DLL build w/ option() and SHARED flag in add_library()
-option(MyLib_SHARED_LIBS "" ON)
 include_directories(SimulatorAPI "${CMAKE_CURRENT_SOURCE_DIR}/../shared_api/include")
-add_library(SimulatorAPI STATIC ${SOURCES} ${INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR})
-# Include SharedAPI
+add_library(SimulatorAPI SHARED ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR})
+# Include SharedAPI and Robot
 target_link_libraries(SimulatorAPI SharedAPI)
-# Expose include/ to any cmake project that imports RobotAPI
-target_include_directories(SimulatorAPI PUBLIC include/)
+target_link_libraries(SimulatorAPI Robot)
+
+# Remove "cyg" prefix
+set_target_properties(SimulatorAPI PROPERTIES PREFIX "")
+# Change DLL filename
+set_target_properties(SimulatorAPI PROPERTIES OUTPUT_NAME "__CPPSimulatorAPI")
+
 
 # HOW TO RUN A CONSOLE COMMAND IN CMAKE :)
 # https://stackoverflow.com/questions/40696990/cmake-post-build-event-copy-compiled-libraries

@@ -1,8 +1,7 @@
 #pragma once
 
 #include "shared_robot_api.hpp"
-
-#define SIM_ROBOT_API __declspec(dllexport)
+#include <string>
 
 namespace unity_api
 {
@@ -16,12 +15,12 @@ namespace unity_api
         SimRobotUnityAPI();
 
     public:
-
         static SimRobotUnityAPI *GetInstance();
 
         float velocity = 0.0f;
         shared_api::Motor* motors[MAX_MOTORS];
         int added_motor_index = 0;
+        std::string output_buff = "";
 
         void RegisterMotor(shared_api::Motor* motor);
         shared_api::Motor* GetMotor(int port);

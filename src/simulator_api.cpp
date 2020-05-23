@@ -2,7 +2,8 @@
 // Created by Lucas on 2020-05-22.
 //
 
-#include "simulator_api.h"
+
+#include "shared_robot_api.hpp"
 #include "unity_api.h"
 
 namespace shared_api
