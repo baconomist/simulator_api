@@ -31,17 +31,3 @@ target_link_libraries(SimulatorAPI Robot)
 set_target_properties(SimulatorAPI PROPERTIES PREFIX "")
 # Change DLL filename
 set_target_properties(SimulatorAPI PROPERTIES OUTPUT_NAME "__CPPSimulatorAPI")
-
-
-# HOW TO RUN A CONSOLE COMMAND IN CMAKE :)
-# https://stackoverflow.com/questions/40696990/cmake-post-build-event-copy-compiled-libraries
-# https://stackoverflow.com/questions/25687890/running-a-bash-command-via-cmake
-# THIS CAUSES A BUILD LOOP SINCE THIS SCRIPT EFFECTIVELY CALLS THIS FILE
-#add_custom_command(
-#        TARGET SimulatorAPI
-#        POST_BUILD
-#        COMMAND bash -c "echo 'Current Bash Dir:'; PWD"
-#        COMMAND bash -c "sh ${CMAKE_CURRENT_SOURCE_DIR}/build.sh ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}"
-#)
-
-#PRE_BUILD
