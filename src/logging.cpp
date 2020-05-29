@@ -6,7 +6,7 @@
 #include "unity_api.h"
 #include <string>
 
-namespace logging
+namespace shared_api::logging
 {
     void add_to_simulated_buffer(const std::string& prefix, const std::string& message)
     {
