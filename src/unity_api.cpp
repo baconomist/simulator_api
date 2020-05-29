@@ -4,22 +4,22 @@
 
 namespace unity_api
 {
-    SimRobotUnityAPI *SimRobotUnityAPI::instance = nullptr;
+    UnityAPI *UnityAPI::instance = nullptr;
 
-    SimRobotUnityAPI::SimRobotUnityAPI() = default;
+    UnityAPI::UnityAPI() = default;
 
-    SimRobotUnityAPI *SimRobotUnityAPI::GetInstance()
+    UnityAPI *UnityAPI::GetInstance()
     {
         if (instance == nullptr)
-            instance = new SimRobotUnityAPI();
+            instance = new UnityAPI();
         return instance;
     }
 
-    SimRobotUnityAPI::~SimRobotUnityAPI()
+    UnityAPI::~UnityAPI()
     {
     }
 
-    void SimRobotUnityAPI::RegisterMotor(shared_api::Motor *motor)
+    void UnityAPI::RegisterMotor(shared_api::Motor *motor)
     {
         if (added_motor_index >= MAX_MOTORS - 1)
             throw std::runtime_error("Cannot add more than MAX_MOTORS defined in unity_api.cpp");
@@ -27,7 +27,7 @@ namespace unity_api
         added_motor_index++;
     }
 
-    shared_api::Motor *SimRobotUnityAPI::GetMotor(int port)
+    shared_api::Motor *UnityAPI::GetMotor(int port)
     {
         if (port >= MAX_MOTORS + 1)
             throw std::runtime_error("Cannot get more than MAX_MOTORS defined in unity_api.cpp");

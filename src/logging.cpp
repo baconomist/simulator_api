@@ -10,9 +10,9 @@ namespace shared_api::logging
 {
     void add_to_simulated_buffer(const std::string& prefix, const std::string& message)
     {
-        unity_api::SimRobotUnityAPI::GetInstance()->output_buff += prefix;
-        unity_api::SimRobotUnityAPI::GetInstance()->output_buff += message;
-        unity_api::SimRobotUnityAPI::GetInstance()->output_buff += "\n";
+        unity_api::UnityAPI::GetInstance()->output_buff += prefix;
+        unity_api::UnityAPI::GetInstance()->output_buff += message;
+        unity_api::UnityAPI::GetInstance()->output_buff += "\n";
     }
 
     void info(const std::string& message)

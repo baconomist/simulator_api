@@ -9,7 +9,7 @@
 
 const int OUTPUT_BUFFER_SIZE = 9999;
 
-SIM_ROBOT_API int Test()
+UNITY_API int Test()
 {
     return 232323;
 }
@@ -29,34 +29,34 @@ SIM_ROBOT_API int Test()
 //    return api->GetMotor(port)->voltage;
 //}
 
-SIM_ROBOT_API int GetOutputBufferSize()
+UNITY_API int GetOutputBufferSize()
 {
     return OUTPUT_BUFFER_SIZE;
 }
 
-SIM_ROBOT_API void ReadOutputBuffer(char* outBuff)
+UNITY_API void ReadOutputBuffer(char* outBuff)
 {
-    std::string output_buff = unity_api::SimRobotUnityAPI::GetInstance()->output_buff;
+    std::string output_buff = unity_api::UnityAPI::GetInstance()->output_buff;
     strcpy_s(outBuff, OUTPUT_BUFFER_SIZE, output_buff.c_str());
-    unity_api::SimRobotUnityAPI::GetInstance()->output_buff = "";
+    unity_api::UnityAPI::GetInstance()->output_buff = "";
 }
 
-SIM_ROBOT_API void InitializeAutonomous()
+UNITY_API void InitializeAutonomous()
 {
     shared_api::initialize_autonomous();
 }
 
-SIM_ROBOT_API void InitializeOpControl()
+UNITY_API void InitializeOpControl()
 {
     shared_api::initialize_opcontrol();
 }
 
-SIM_ROBOT_API void UpdateAutonomous()
+UNITY_API void UpdateAutonomous()
 {
     shared_api::update_autonomous();
 }
 
-SIM_ROBOT_API void UpdateOpControl()
+UNITY_API void UpdateOpControl()
 {
     shared_api::initialize_opcontrol();
 }

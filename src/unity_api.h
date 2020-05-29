@@ -8,14 +8,14 @@ namespace unity_api
     // 2x the actual motor limit of 8 if you wanna make a wacky bot
     const int MAX_MOTORS = 16;
 
-    class SimRobotUnityAPI
+    class UnityAPI
     {
-        static SimRobotUnityAPI *instance;
+        static UnityAPI *instance;
 
-        SimRobotUnityAPI();
+        UnityAPI();
 
     public:
-        static SimRobotUnityAPI *GetInstance();
+        static UnityAPI *GetInstance();
 
         float velocity = 0.0f;
         shared_api::Motor* motors[MAX_MOTORS];
@@ -25,6 +25,6 @@ namespace unity_api
         void RegisterMotor(shared_api::Motor* motor);
         shared_api::Motor* GetMotor(int port);
 
-        ~SimRobotUnityAPI();
+        ~UnityAPI();
     };
 }
