@@ -7,7 +7,7 @@
 #include "unity_method_definitions.h"
 #include <string>
 
-const int OUTPUT_BUFFER_SIZE = 9999;
+const int OUTPUT_BUFFER_SIZE = 99999;
 
 static bool API_INITIALIZED = false;
 
