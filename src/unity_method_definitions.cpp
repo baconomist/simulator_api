@@ -9,25 +9,38 @@
 
 const int OUTPUT_BUFFER_SIZE = 9999;
 
-UNITY_API int Test()
+static bool API_INITIALIZED = false;
+
+std::ofstream *log_file = nullptr;
+
+UNITY_API void InitializeAPI()
 {
-    return 232323;
+    log_file = new std::ofstream(CPP_LOG_FILE);
+    // Redirect stdout and stdcerr to a file an output file
+    std::cerr.rdbuf(log_file->rdbuf());
+    std::cout.rdbuf(log_file->rdbuf());
+
+    API_INITIALIZED = true;
+
+    // Can't call shared_api::logging here since we might not have yet set the log listeners
+    std::cout << "API INITIALIZED." << std::endl;
 }
 
-//SIM_ROBOT_API SimRobotUnityAPI *GetSharedRobotAPI()
-//{
-//    return SimRobotUnityAPI::GetInstance();
-//}
-//
-//SIM_ROBOT_API void DeleteSharedRobotAPI(SimRobotUnityAPI *api)
-//{
-//    delete api;
-//}
-//
-//SIM_ROBOT_API int GetMotorVoltage(SimRobotUnityAPI *api, int port)
-//{
-//    return api->GetMotor(port)->voltage;
-//}
+UNITY_API void DestroyAPI()
+{
+    shared_api::logging::info("Destroying API...");
+    if (log_file != nullptr)
+    {
+        log_file->close();
+        log_file = nullptr;
+    }
+    shared_api::logging::info("API Destroyed.");
+}
+
+UNITY_API int IsAPIInitialized()
+{
+    return API_INITIALIZED;
+}
 
 UNITY_API int GetOutputBufferSize()
 {
