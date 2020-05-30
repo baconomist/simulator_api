@@ -18,7 +18,8 @@ set(DCMAKE_SH="CMAKE_SH-NOTFOUND")
 cmake_minimum_required(VERSION ${VERSION})
 project(SimulatorAPI CXX)
 
-file(GLOB SOURCES "src/*.c" "src/*.h" "src/*.cpp" "src/*.hpp")
+include_directories("src")
+file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c" "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
 # Enable DLL build w/ option() and SHARED flag in add_library()
 include_directories(SimulatorAPI "${CMAKE_CURRENT_SOURCE_DIR}/../shared_api/include")
@@ -27,7 +28,7 @@ add_library(SimulatorAPI SHARED ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(SimulatorAPI SharedAPI)
 target_link_libraries(SimulatorAPI Robot)
 
-# Remove "cyg" prefix
+# Remove prefix
 set_target_properties(SimulatorAPI PROPERTIES PREFIX "")
 # Change DLL filename
 set_target_properties(SimulatorAPI PROPERTIES OUTPUT_NAME "__CPPSimulatorAPI")
