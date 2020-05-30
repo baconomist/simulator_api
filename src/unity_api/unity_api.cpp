@@ -4,22 +4,21 @@
 
 namespace unity_api
 {
-    UnityAPI *UnityAPI::instance = nullptr;
+    bool API_INITIALIZED = false;
+    std::ofstream *log_file = nullptr;
 
-    UnityAPI::UnityAPI() = default;
+    shared_api::Motor* motors[MAX_MOTORS];
+    int added_motor_index;
 
-    UnityAPI *UnityAPI::GetInstance()
-    {
-        if (instance == nullptr)
-            instance = new UnityAPI();
-        return instance;
-    }
+    std::string* output_buff;
 
-    UnityAPI::~UnityAPI()
-    {
-    }
+    OutputBufferListener* log_info_listener;
+    OutputBufferListener* log_debug_listener;
+    OutputBufferListener* log_warn_listener;
+    OutputBufferListener* log_err_listener;
+    OutputBufferListener* log_except_listener;
 
-    void UnityAPI::RegisterMotor(shared_api::Motor *motor)
+    void RegisterMotor(shared_api::Motor *motor)
     {
         if (added_motor_index >= MAX_MOTORS - 1)
             throw std::runtime_error("Cannot add more than MAX_MOTORS defined in unity_api.cpp");
@@ -27,7 +26,7 @@ namespace unity_api
         added_motor_index++;
     }
 
-    shared_api::Motor *UnityAPI::GetMotor(int port)
+    shared_api::Motor *GetMotor(int port)
     {
         if (port >= MAX_MOTORS + 1)
             throw std::runtime_error("Cannot get more than MAX_MOTORS defined in unity_api.cpp");

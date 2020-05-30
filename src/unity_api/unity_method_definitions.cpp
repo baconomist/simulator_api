@@ -10,14 +10,11 @@
 #include "exception_handling.h"
 #include "testing/testing.h"
 
-const int OUTPUT_BUFFER_SIZE = 99999;
-
-static bool API_INITIALIZED = false;
-
-std::ofstream *log_file = nullptr;
+using namespace unity_api;
 
 UNITY_API void InitializeAPI()
 {
+    output_buff = new std::string();
     log_file = new std::ofstream(CPP_LOG_FILE);
     // Redirect stdout and stdcerr to a file an output file
     std::cerr.rdbuf(log_file->rdbuf());
@@ -52,36 +49,37 @@ UNITY_API int GetOutputBufferSize()
 
 UNITY_API void SetLogInfoListener(void *(listener)())
 {
-    unity_api::UnityAPI::GetInstance()->log_info_listener = listener;
+    log_info_listener = listener;
 }
 
 UNITY_API void SetLogDebugListener(void *(listener)())
 {
-    unity_api::UnityAPI::GetInstance()->log_debug_listener = listener;
+    log_debug_listener = listener;
 }
 
 UNITY_API void SetLogWarnListener(void *(listener)())
 {
-    unity_api::UnityAPI::GetInstance()->log_warn_listener = listener;
+    log_warn_listener = listener;
 }
 
 UNITY_API void SetLogErrListener(void *(listener)())
 {
-    unity_api::UnityAPI::GetInstance()->log_err_listener = listener;
+    log_err_listener = listener;
 }
 
 UNITY_API void SetLogExceptListener(void *(listener)())
 {
-    unity_api::UnityAPI::GetInstance()->log_except_listener = listener;
+    log_except_listener = listener;
 }
 
 
 UNITY_API void ReadOutputBuffer(char *outBuff)
 {
-    // Copy buffer data into unity outBuff
-    std::string output_buff = unity_api::UnityAPI::GetInstance()->output_buff;
-    strcpy_s(outBuff, OUTPUT_BUFFER_SIZE, output_buff.c_str());
-    unity_api::UnityAPI::GetInstance()->output_buff = "";
+    // Copy buffer data into Unity outBuff
+    std::string out_buff = *output_buff;
+    strcpy_s(outBuff, OUTPUT_BUFFER_SIZE, out_buff.c_str());
+    // Clear output_buff
+    *output_buff = "";
 }
 
 UNITY_API void InitializeAutonomous()

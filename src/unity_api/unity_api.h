@@ -12,31 +12,22 @@ namespace unity_api
 {
     // 2x the actual motor limit of 8 if you wanna make a wacky bot
     const int MAX_MOTORS = 16;
+    const int OUTPUT_BUFFER_SIZE = 99999;
 
-    class UnityAPI
-    {
-        static UnityAPI *instance;
+    extern bool API_INITIALIZED;
 
-        UnityAPI();
+    extern std::ofstream *log_file;
 
-    public:
-        static UnityAPI *GetInstance();
+    extern shared_api::Motor* motors[MAX_MOTORS];
+    extern int added_motor_index;
+    extern std::string* output_buff;
 
-        float velocity = 0.0f;
-        shared_api::Motor* motors[MAX_MOTORS];
-        int added_motor_index = 0;
-        std::string output_buff = "";
+    typedef void* (OutputBufferListener)();
+    extern OutputBufferListener* log_info_listener;
+    extern OutputBufferListener* log_debug_listener;
+    extern OutputBufferListener* log_warn_listener;
+    extern OutputBufferListener* log_err_listener;
+    extern OutputBufferListener* log_except_listener;
 
-        typedef void* (OutputBufferListener)();
-        OutputBufferListener* log_info_listener;
-        OutputBufferListener* log_debug_listener;
-        OutputBufferListener* log_warn_listener;
-        OutputBufferListener* log_err_listener;
-        OutputBufferListener* log_except_listener;
-
-        void RegisterMotor(shared_api::Motor* motor);
-        shared_api::Motor* GetMotor(int port);
-
-        ~UnityAPI();
-    };
+    void RegisterMotor(shared_api::Motor *motor);
 }

@@ -15,7 +15,7 @@ namespace shared_api
 
     Motor::Motor(int _port) : port(_port)
     {
-        unity_api::UnityAPI::GetInstance()->RegisterMotor(this);
+        unity_api::RegisterMotor(this);
     }
 
     Motor::~Motor()
