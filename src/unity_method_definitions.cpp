@@ -2,10 +2,13 @@
 // Created by Lucas on 2020-05-22.
 //
 
+#include <iostream>
+#include <fstream>
 #include "shared_robot_api.hpp"
 #include "unity_api.h"
 #include "unity_method_definitions.h"
-#include <string>
+#include "exception_handling.h"
+#include "testing/testing.h"
 
 const int OUTPUT_BUFFER_SIZE = 99999;
 
@@ -120,6 +123,10 @@ UNITY_API void UpdateOpControl()
     win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
     {}
 }
+
+UNITY_API void RunAPITests()
+{
+    run_tests();
 }
 
 
