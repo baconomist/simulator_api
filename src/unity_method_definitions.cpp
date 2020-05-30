@@ -34,8 +34,35 @@ UNITY_API int GetOutputBufferSize()
     return OUTPUT_BUFFER_SIZE;
 }
 
-UNITY_API void ReadOutputBuffer(char* outBuff)
+UNITY_API void SetLogInfoListener(void *(listener)())
 {
+    unity_api::UnityAPI::GetInstance()->log_info_listener = listener;
+}
+
+UNITY_API void SetLogDebugListener(void *(listener)())
+{
+    unity_api::UnityAPI::GetInstance()->log_debug_listener = listener;
+}
+
+UNITY_API void SetLogWarnListener(void *(listener)())
+{
+    unity_api::UnityAPI::GetInstance()->log_warn_listener = listener;
+}
+
+UNITY_API void SetLogErrListener(void *(listener)())
+{
+    unity_api::UnityAPI::GetInstance()->log_err_listener = listener;
+}
+
+UNITY_API void SetLogExceptListener(void *(listener)())
+{
+    unity_api::UnityAPI::GetInstance()->log_except_listener = listener;
+}
+
+
+UNITY_API void ReadOutputBuffer(char *outBuff)
+{
+    // Copy buffer data into unity outBuff
     std::string output_buff = unity_api::UnityAPI::GetInstance()->output_buff;
     strcpy_s(outBuff, OUTPUT_BUFFER_SIZE, output_buff.c_str());
     unity_api::UnityAPI::GetInstance()->output_buff = "";

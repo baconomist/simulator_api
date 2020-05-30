@@ -15,11 +15,11 @@ extern "C"
 
 UNITY_API int Test();
 
-//SIM_ROBOT_API SimRobotUnityAPI *GetSharedRobotAPI();
-//
-//SIM_ROBOT_API void DeleteSharedRobotAPI(SimRobotUnityAPI *api);
-//
-//SIM_ROBOT_API int GetMotorVoltage(SimRobotUnityAPI *api, int port);
+UNITY_API void SetLogInfoListener(void* (listener)());
+UNITY_API void SetLogDebugListener(void* (listener)());
+UNITY_API void SetLogWarnListener(void* (listener)());
+UNITY_API void SetLogErrListener(void* (listener)());
+UNITY_API void SetLogExceptListener(void* (listener)());
 
 UNITY_API int GetOutputBufferSize();
 
