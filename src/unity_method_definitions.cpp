@@ -43,22 +43,43 @@ UNITY_API void ReadOutputBuffer(char* outBuff)
 
 UNITY_API void InitializeAutonomous()
 {
-    shared_api::initialize_autonomous();
+    win_try
+    {
+        shared_api::initialize_autonomous();
+    }
+    win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
+    {}
 }
 
 UNITY_API void InitializeOpControl()
 {
-    shared_api::initialize_opcontrol();
+    win_try
+    {
+        shared_api::initialize_opcontrol();
+    }
+    win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
+    {}
 }
 
 UNITY_API void UpdateAutonomous()
 {
-    shared_api::update_autonomous();
+    win_try
+    {
+        shared_api::update_autonomous();
+    }
+    win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
+    {}
 }
 
 UNITY_API void UpdateOpControl()
 {
-    shared_api::initialize_opcontrol();
+    win_try
+    {
+        shared_api::update_opcontrol();
+    }
+    win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
+    {}
+}
 }
 
 
