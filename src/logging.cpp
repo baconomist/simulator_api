@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 #include "logging.h"
-#include "unity_api.h"
+#include "unity_api/unity_api.h"
 
 namespace shared_api::logging
 {
