@@ -18,8 +18,5 @@ namespace shared_api
         unity_api::RegisterMotor(this);
     }
 
-    Motor::~Motor()
-    {
-
-    }
+    Motor::~Motor() = default;
 }

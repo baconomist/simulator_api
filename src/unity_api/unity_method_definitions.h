@@ -8,7 +8,6 @@
 
 extern "C"
 {
-
 UNITY_API void InitializeAPI();
 UNITY_API void DestroyAPI();
 UNITY_API int IsAPIInitialized();
@@ -22,9 +21,4 @@ UNITY_API void SetLogExceptListener(void* (listener)());
 
 UNITY_API int GetOutputBufferSize();
 UNITY_API void ReadOutputBuffer(char* outBuff);
-
-UNITY_API void InitializeAutonomous();
-UNITY_API void InitializeOpControl();
-UNITY_API void UpdateAutonomous();
-UNITY_API void UpdateOpControl();
 }
