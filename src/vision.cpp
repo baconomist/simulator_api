@@ -4,6 +4,12 @@
 
 #include "shared_robot_api.hpp"
 #include "unity_api/hardware.h"
+#include "unity_api/device_event_handler.h"
+
+enum class DeviceEvent
+{
+    LEDChange
+};
 
 namespace shared_api
 {
@@ -14,6 +20,6 @@ namespace shared_api
 
     int32_t Vision::set_led(const int32_t rgb)
     {
-        return vision_led_change_callback(port, rgb);
+        return device_events::NotifyOfEvent<int, float>((int) device_events::DeviceType::VisionSensor, (int) DeviceEvent::LEDChange, 1, 20);
     }
 }

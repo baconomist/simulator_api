@@ -4,7 +4,12 @@
 
 
 #include "shared_robot_api.hpp"
-#include "unity_api/hardware.h"
+#include "unity_api/device_event_handler.h"
+
+enum class DeviceEvent
+{
+    VoltageChange = 0
+};
 
 namespace shared_api
 {
@@ -15,7 +20,7 @@ namespace shared_api
     void Motor::move_voltage(int _voltage)
     {
         voltage = _voltage;
-        motor_voltage_change_callback(port, voltage);
+        device_events::NotifyOfEvent<int>((int) device_events::DeviceType::Motor, (int) DeviceEvent::VoltageChange, 1);
     }
 
     Motor::~Motor() = default;
