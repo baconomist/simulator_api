@@ -5,7 +5,7 @@
 #pragma once
 
 #include <string>
-#include <windows.h>
+#include <Windows.h>
 #include "unity_api/unity_api.h"
 #include "StackWalker/StackWalker.h"
 

@@ -5,7 +5,7 @@
 #include "shared_robot_api.hpp"
 #include "testing/testing.h"
 #include "tests.h"
-#include "exception_handling.h"
+#include "utils/exception_handling.h"
 
 // Need this function since we can't unwind strings here
 void _test_null_pointer(const std::string &test_name)

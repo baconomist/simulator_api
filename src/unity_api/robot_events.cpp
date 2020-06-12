@@ -3,7 +3,7 @@
 //
 
 #include "robot_events.h"
-#include "exception_handling.h"
+#include "utils/exception_handling.h"
 
 UNITY_API void RobotInitialize()
 {
