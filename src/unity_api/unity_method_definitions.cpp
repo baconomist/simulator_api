@@ -7,7 +7,6 @@
 #include "shared_robot_api.hpp"
 #include "unity_api.h"
 #include "unity_method_definitions.h"
-#include "exception_handling.h"
 #include "testing/testing.h"
 
 using namespace unity_api;
@@ -29,11 +28,13 @@ UNITY_API void InitializeAPI()
 UNITY_API void DestroyAPI()
 {
     shared_api::logging::info("Destroying API...");
+
     if (log_file != nullptr)
     {
         log_file->close();
         log_file = nullptr;
     }
+
     shared_api::logging::info("API Destroyed.");
 }
 

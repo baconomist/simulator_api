@@ -1,7 +1,8 @@
 #pragma once
 
-#include "shared_robot_api.hpp"
 #include <string>
+#include <functional>
+#include "shared_robot_api.hpp"
 
 // Enable this to output the exception path as only ${PROJECT_DIR}/path rather than the abs path
 const bool TRUNCATE_CONSOLE_EXCEPTION_PATH = true;
@@ -18,8 +19,6 @@ namespace unity_api
 
     extern std::ofstream *log_file;
 
-    extern shared_api::Motor* motors[MAX_MOTORS];
-    extern int added_motor_index;
     extern std::string* output_buff;
 
     typedef void* (OutputBufferListener)();
@@ -28,6 +27,4 @@ namespace unity_api
     extern OutputBufferListener* log_warn_listener;
     extern OutputBufferListener* log_err_listener;
     extern OutputBufferListener* log_except_listener;
-
-    void RegisterMotor(shared_api::Motor *motor);
 }

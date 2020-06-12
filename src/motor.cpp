@@ -4,18 +4,18 @@
 
 
 #include "shared_robot_api.hpp"
-#include "unity_api/unity_api.h"
+#include "unity_api/hardware.h"
 
 namespace shared_api
 {
+    Motor::Motor(int _port) : port(_port)
+    {
+    }
+
     void Motor::move_voltage(int _voltage)
     {
         voltage = _voltage;
-    }
-
-    Motor::Motor(int _port) : port(_port)
-    {
-        unity_api::RegisterMotor(this);
+        motor_voltage_change_callback(port, voltage);
     }
 
     Motor::~Motor() = default;
