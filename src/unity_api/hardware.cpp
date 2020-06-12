@@ -8,6 +8,7 @@
 using namespace unity_api;
 
 MotorVoltageChangeCallback* motor_voltage_change_callback;
+VisionLEDChangeCallback* vision_led_change_callback;
 
 UNITY_API int GetMaxMotors()
 {
@@ -17,4 +18,9 @@ UNITY_API int GetMaxMotors()
 UNITY_API void SetMotorVoltageChangeCallback(MotorVoltageChangeCallback* callback)
 {
     motor_voltage_change_callback = callback;
+}
+
+UNITY_API void SetVisionLEDChangeCallback(VisionLEDChangeCallback *callback)
+{
+    vision_led_change_callback = callback;
 }
