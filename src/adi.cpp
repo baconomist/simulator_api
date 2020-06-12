@@ -18,9 +18,7 @@ namespace shared_api::adi
     }
 
     std::int32_t AnalogSensor::get_value() const {
-        std::string str((const char *) this->port);
-        shared_api::logging::info("AAAAAAAAAA" + str);
-        shared_api::logging::info("BBBBBBB");
+        // TODO: Properly implement via Unity Sensor
         return 50;
     }
 
