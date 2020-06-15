@@ -10,7 +10,7 @@ namespace shared_api::hardware
 {
     Motor::Motor(BrainPort port) : BrainDevice(port)
     {
-        ParamRegistry::RegisterParameter<ParamType::Int, int>((int) port, "voltage", &voltage);
+        ParamRegistry::RegisterReadonlyParameterStream<ParamType::Int, int>((int) port, "voltage", &voltage);
     }
 
     void Motor::move_voltage(int _voltage)

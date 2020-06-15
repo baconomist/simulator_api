@@ -17,6 +17,47 @@ bool is_number(const std::string &s)
     return !s.empty() && it == s.end();
 }
 
+std::string get_param_name(const std::string &paramUriStr)
+{
+    std::string paramName;
+    // ?paramName=...&deviceType=
+    if (paramUriStr.find("paramName=") < paramUriStr.find("deviceType="))
+    {
+        paramName = paramUriStr.substr(paramUriStr.find("paramName=") + std::string("paramName=").length(),
+                                       paramUriStr.find("deviceType=") -
+                                       (paramUriStr.find("paramName=") + std::string("paramName=").length()) - 1);
+    } else // ?deviceType=...&paramName=
+    {
+        shared_api::logging::error("Param Uri Formatting Problem, Not Implemented...");
+    }
+
+    return paramName;
+}
+
+std::string get_device_type(const std::string &paramUriStr)
+{
+    std::string deviceType;
+
+    // ?paramName=...&deviceType=
+    if (paramUriStr.find("paramName=") < paramUriStr.find("deviceType="))
+    {
+        deviceType = paramUriStr.substr(paramUriStr.find("deviceType=") + std::string("deviceType=").length(),
+                                        paramUriStr.length() - paramUriStr.find("deviceType="));
+    } else // ?deviceType=...&paramName=
+    {
+        shared_api::logging::error("Param Uri Formatting Problem, Not Implemented...");
+    }
+
+    return deviceType;
+}
+
+std::string get_port(const std::string &paramUriStr)
+{
+    return paramUriStr.substr(paramUriStr.find(paramUriRoot) + paramUriRoot.length() + 1,
+                              paramUriStr.find('?') -
+                              (paramUriStr.find(paramUriRoot) + paramUriRoot.length() + 1));
+}
+
 UnityParamRequestListener *unityParamRequestListener;
 
 ParamRequestResponse CreateParamRequestResponse(shared_api::hardware::BrainPort port,
@@ -36,25 +77,9 @@ UNITY_API void SetParamRequestListener(UnityParamRequestListener *paramRequestLi
 UNITY_API void RequestParam(ParamRequestResponse &paramRequestResponse)
 {
     std::string paramUriStr = paramRequestResponse.paramUri;
-    std::string port = paramUriStr.substr(paramUriStr.find(paramUriRoot) + paramUriRoot.length() + 1,
-                                          paramUriStr.find('?') -
-                                          (paramUriStr.find(paramUriRoot) + paramUriRoot.length() + 1));
-    std::string paramName;
-    std::string deviceType;
-
-    // ?paramName=...&deviceType=
-    if (paramUriStr.find("paramName=") < paramUriStr.find("deviceType="))
-    {
-        paramName = paramUriStr.substr(paramUriStr.find("paramName=") + std::string("paramName=").length(),
-                                       paramUriStr.find("deviceType=") -
-                                       (paramUriStr.find("paramName=") + std::string("paramName=").length()) - 1);
-
-        deviceType = paramUriStr.substr(paramUriStr.find("deviceType=") + std::string("deviceType=").length(),
-                                        paramUriStr.length() - paramUriStr.find("deviceType="));
-    } else // ?deviceType=...&paramName=
-    {
-
-    }
+    std::string port = get_port(paramUriStr);
+    std::string paramName = get_param_name(paramUriStr);
+    std::string deviceType = get_device_type(paramUriStr);
 
     // TODO: check device type
     if (is_number(port))
@@ -62,13 +87,15 @@ UNITY_API void RequestParam(ParamRequestResponse &paramRequestResponse)
         switch (ParamRegistry::GetParameterType(std::stoi(port), paramName))
         {
             case ParamType::Undefined:
-                shared_api::logging::error("Parameter type incorrect or somehow undefined. paramName: " + paramName + " deviceType: " + deviceType);
+                shared_api::logging::error(
+                        "Parameter type incorrect or undefined. paramName: " + paramName + " deviceType: " +
+                        deviceType);
                 break;
             case ParamType::Int:
-                paramRequestResponse.int_val = ParamRegistry::GetParameter<int>(std::stoi(port), paramName);
+                paramRequestResponse.int_val = ParamRegistry::ReadParameterStream<ParamType::Int, int>(std::stoi(port), paramName);
                 break;
             case ParamType::Float:
-                paramRequestResponse.float_val = ParamRegistry::GetParameter<float>(std::stoi(port), paramName);
+                paramRequestResponse.float_val = ParamRegistry::ReadParameterStream<ParamType::Float, float>(std::stoi(port), paramName);
                 break;
         }
     }

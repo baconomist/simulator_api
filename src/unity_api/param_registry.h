@@ -15,37 +15,61 @@ enum class ParamType
     Float
 };
 
-struct Param
+struct ParamStream
 {
     ParamType paramType;
-    // ValueData * (Pointer to param value)
     std::any value;
+    // if true, value is a ParamType* pointer, otherwise value is just its "ParamType"
+    bool isValueReadonlyPtr;
 };
 
 class ParamRegistry
 {
 private:
     // <DevicePort, <ParamName, Param struct>>
-    static std::map<int, std::map<std::string, Param>> deviceParameterMap;
+    static std::map<int, std::map<std::string, ParamStream>> deviceParameterMap;
 
 public:
     template<ParamType PT, typename T>
-    static void RegisterParameter(int devicePort, const std::string &paramName, T *param)
+    static void RegisterReadonlyParameterStream(int devicePort, const std::string &paramName, T *param)
     {
-        if (isupper(paramName[0]))
-            shared_api::logging::warn(
-                    "WARNING: try to use C# public field naming conventions. Port: " + std::to_string(devicePort) +
-                    " Param: " + paramName);
-        deviceParameterMap[devicePort][paramName] = Param{PT, param};
+        deviceParameterMap[devicePort][paramName] = ParamStream{PT, param, true};
     }
 
-    template<typename T>
-    static T GetParameter(int devicePort, const std::string &paramName)
+    template<ParamType PT, typename T>
+    static void RegisterWritableParameterStream(int devicePort, const std::string &paramName)
+    {
+        deviceParameterMap[devicePort][paramName] = ParamStream{PT, 0, false};
+    }
+
+    template<ParamType PT, typename T>
+    static T ReadParameterStream(int devicePort, const std::string &paramName)
     {
         if (ErrorCheck(devicePort, paramName)) return 0;
 
-        Param param = deviceParameterMap[devicePort][paramName];
-        return *std::any_cast<T *>(param.value);
+        ParamStream paramStream = deviceParameterMap[devicePort][paramName];
+        if (paramStream.isValueReadonlyPtr)
+            return *std::any_cast<T *>(paramStream.value);
+        else
+            return std::any_cast<T>(paramStream.value);
+    }
+
+    template<ParamType PT, typename T>
+    static void WriteParameterStream(int devicePort, const std::string &paramName, T value)
+    {
+        if (ErrorCheck(devicePort, paramName)) return;
+
+        ParamStream paramStream = deviceParameterMap[devicePort][paramName];
+        if (paramStream.isValueReadonlyPtr)
+        {
+            shared_api::logging::error(
+                    "ParamStream is readonly! Cannot write to port: " + std::to_string(devicePort) + " paramName: " +
+                    paramName);
+        }
+
+        paramStream.value = value;
+
+        deviceParameterMap[devicePort][paramName] = paramStream;
     }
 
     static ParamType GetParameterType(int devicePort, const std::string &paramName);
