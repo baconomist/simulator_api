@@ -87,7 +87,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
-#include <windows.h>
+#include <Windows.h>
 #pragma comment(lib, "version.lib") // for "VerQueryValue"
 #pragma warning(disable : 4826)
 
@@ -95,7 +95,7 @@
 // If VC7 and later, then use the shipped 'dbghelp.h'-file
 #pragma pack(push, 8)
 #if _MSC_VER >= 1300
-#include <dbghelp.h>
+#include <DbgHelp.h>
 #else
 // inline the important dbghelp.h-declarations...
 typedef enum

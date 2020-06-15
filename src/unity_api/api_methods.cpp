@@ -6,7 +6,7 @@
 #include <fstream>
 #include "shared_robot_api.hpp"
 #include "unity_api.h"
-#include "unity_method_definitions.h"
+#include "api_methods.h"
 #include "testing/testing.h"
 
 using namespace unity_api;

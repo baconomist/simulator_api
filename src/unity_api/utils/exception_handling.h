@@ -7,7 +7,7 @@
 #include <string>
 #include <Windows.h>
 #include "unity_api/unity_api.h"
-#include "StackWalker/StackWalker.h"
+#include "unity_api/StackWalker/StackWalker.h"
 
 // Microsoft try and except functions that prevent unity from crashing, regular try/except will not work
 #define win_try __try
