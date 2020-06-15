@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "unity_method_definitions.h"
+#include "api_methods.h"
 
 extern "C"
 {

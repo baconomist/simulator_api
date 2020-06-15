@@ -1,6 +1,6 @@
 #include <stdexcept>
 #include "unity_api.h"
-#include "unity_method_definitions.h"
+#include "api_methods.h"
 
 namespace unity_api
 {

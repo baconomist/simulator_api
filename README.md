@@ -10,3 +10,5 @@ to the plugin dll
 
 NOTE: "c1xx : fatal error C1083: Cannot open source file:" --> Fix this by reloading cmake project.
 In CLion its Tools --> Cmake --> Reset CMake Cache & Reload Project
+
+NOTE: sometimes you get a LINKER ERROR, just reset CMake cache... (typically happens when you add a new file to the project)
