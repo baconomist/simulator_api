@@ -3,7 +3,7 @@
 //
 
 #include <functional>
-#include "shared_robot_api.hpp"
+#include "simulator_globals.h"
 #include "testing.h"
 #include "tests/tests.h"
 

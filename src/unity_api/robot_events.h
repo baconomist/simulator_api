@@ -8,11 +8,11 @@
 
 extern "C"
 {
-    UNITY_API void RobotInitialize();
-    UNITY_API void CompetitionInitialize();
-    UNITY_API void CompetitionDisable();
-    UNITY_API void InitializeAutonomous();
-    UNITY_API void InitializeOpControl();
-    UNITY_API void UpdateAutonomous();
-    UNITY_API void UpdateOpControl();
+UNITY_API void Initialize();
+UNITY_API void CompetitionInitialize();
+UNITY_API void CompetitionDisable();
+UNITY_API void InitializeAutonomous();
+UNITY_API void UpdateAutonomous();
+UNITY_API void InitializeOpControl();
+UNITY_API void UpdateOpControl();
 }

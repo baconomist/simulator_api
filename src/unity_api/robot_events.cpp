@@ -2,14 +2,15 @@
 // Created by Lucas on 2020-05-30.
 //
 
+#include "simulator_globals.h"
 #include "robot_events.h"
 #include "utils/exception_handling.h"
 
-UNITY_API void RobotInitialize()
+UNITY_API void Initialize()
 {
     win_try
     {
-        shared_api::initialize();
+        initialize();
     }
     win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
     {}
@@ -19,7 +20,7 @@ UNITY_API void CompetitionInitialize()
 {
     win_try
     {
-        shared_api::competition_initialize();
+        competition_initialize();
     }
     win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
     {}
@@ -29,7 +30,7 @@ UNITY_API void CompetitionDisable()
 {
     win_try
     {
-        shared_api::disabled();
+        disabled();
     }
     win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
     {}
@@ -45,21 +46,21 @@ UNITY_API void InitializeAutonomous()
     {}
 }
 
-UNITY_API void InitializeOpControl()
-{
-    win_try
-    {
-        shared_api::initialize_opcontrol();
-    }
-    win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
-    {}
-}
-
 UNITY_API void UpdateAutonomous()
 {
     win_try
     {
         shared_api::update_autonomous();
+    }
+    win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
+    {}
+}
+
+UNITY_API void InitializeOpControl()
+{
+    win_try
+    {
+        shared_api::initialize_opcontrol();
     }
     win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
     {}
@@ -74,3 +75,4 @@ UNITY_API void UpdateOpControl()
     win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
     {}
 }
+

@@ -6,7 +6,7 @@
 
 #include <map>
 #include <any>
-#include "shared_robot_api.hpp"
+#include "simulator_globals.h"
 
 enum class ParamType
 {
@@ -48,8 +48,9 @@ public:
         if (ErrorCheck(devicePort, paramName)) return 0;
 
         ParamStream paramStream = deviceParameterMap[devicePort][paramName];
+
         if (paramStream.isValueReadonlyPtr)
-            return *std::any_cast<T *>(paramStream.value);
+            return *std::any_cast<T*>(paramStream.value);
         else
             return std::any_cast<T>(paramStream.value);
     }

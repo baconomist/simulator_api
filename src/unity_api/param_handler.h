@@ -8,7 +8,7 @@
 #include <any>
 #include "unity_api.h"
 #include "api_methods.h"
-#include "shared_robot_api.hpp"
+#include "simulator_globals.h"
 #include "param_registry.h"
 
 // !IMPORTANT All uris should start with a leading slash(/...)
@@ -25,7 +25,7 @@ struct ParamRequestResponse
     float float_val;
 };
 
-typedef void (UnityParamRequestListener)(ParamRequestResponse paramRequest);
+typedef ParamRequestResponse (UnityParamRequestListener)(ParamRequestResponse paramRequest);
 
 extern UnityParamRequestListener *unityParamRequestListener;
 

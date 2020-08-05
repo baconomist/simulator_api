@@ -4,7 +4,8 @@
 
 #include <iostream>
 #include <fstream>
-#include "shared_robot_api.hpp"
+#include <unity_api/utils/exception_handling.h>
+#include "simulator_globals.h"
 #include "unity_api.h"
 #include "api_methods.h"
 #include "testing/testing.h"
@@ -27,15 +28,22 @@ UNITY_API void InitializeAPI()
 
 UNITY_API void DestroyAPI()
 {
-    shared_api::logging::info("Destroying API...");
-
-    if (log_file != nullptr)
+    win_try
     {
-        log_file->close();
-        log_file = nullptr;
-    }
+        []() {
+            shared_api::logging::info("Destroying API...");
 
-    shared_api::logging::info("API Destroyed.");
+            if (log_file != nullptr)
+            {
+                log_file->close();
+                log_file = nullptr;
+            }
+
+            shared_api::logging::info("API Destroyed.");
+        }();
+    }
+    win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
+    {}
 }
 
 UNITY_API int IsAPIInitialized()
@@ -76,11 +84,18 @@ UNITY_API void SetLogExceptListener(void *(listener)())
 
 UNITY_API void ReadOutputBuffer(char *outBuff)
 {
-    // Copy buffer data into Unity outBuff
-    std::string out_buff = *output_buff;
-    strcpy_s(outBuff, OUTPUT_BUFFER_SIZE, out_buff.c_str());
-    // Clear output_buff
-    *output_buff = "";
+    win_try
+    {
+        [](char *outBuff) {
+            // Copy buffer data into Unity outBuff
+            std::string out_buff = *output_buff;
+            strcpy_s(outBuff, OUTPUT_BUFFER_SIZE, out_buff.c_str());
+            // Clear output_buff
+            *output_buff = "";
+        }(outBuff);
+    }
+    win_catch(ExpFilter(GetExceptionInformation(), GetExceptionCode()))
+    {}
 }
 
 UNITY_API void RunAPITests()

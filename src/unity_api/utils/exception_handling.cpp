@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include <iostream>
 
-#include "shared_robot_api.hpp"
+#include "simulator_globals.h"
 #include "exception_handling.h"
 
 unsigned int LAST_ERROR_CODE;

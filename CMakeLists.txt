@@ -21,6 +21,8 @@ project(SimulatorAPI CXX)
 include_directories("src")
 file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c" "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
+# Include PROS headers
+include_directories(RobotAPI "${CMAKE_CURRENT_SOURCE_DIR}/../include")
 # Enable DLL build w/ option() and SHARED flag in add_library()
 include_directories(SimulatorAPI "${CMAKE_CURRENT_SOURCE_DIR}/../shared_api/include")
 add_library(SimulatorAPI SHARED ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR})

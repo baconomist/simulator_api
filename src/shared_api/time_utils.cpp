@@ -4,7 +4,7 @@
 
 #include <chrono>
 #include <thread>
-#include "shared_robot_api.hpp"
+#include "simulator_globals.h"
 
 namespace shared_api::time_utils
 {

@@ -2,7 +2,7 @@
 // Created by Lucas on 2020-05-30.
 //
 
-#include "shared_robot_api.hpp"
+#include "simulator_globals.h"
 #include "testing/testing.h"
 #include "tests.h"
 #include "unity_api/utils/exception_handling.h"

@@ -2,7 +2,7 @@
 // Created by Lucas on 2020-05-30.
 //
 
-#include <hardware/hardware.h>
+#include <hardware.h>
 #include <cctype>
 
 #include "unity_api.h"

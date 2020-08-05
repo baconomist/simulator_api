@@ -2,7 +2,7 @@
 
 #include <string>
 #include <functional>
-#include "shared_robot_api.hpp"
+#include "simulator_globals.h"
 
 // Enable this to output the exception path as only ${PROJECT_DIR}/path rather than the abs path
 const bool TRUNCATE_CONSOLE_EXCEPTION_PATH = true;
